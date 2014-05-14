@@ -1,0 +1,228 @@
+<!doctype html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>支付宝 - 网上支付 安全快速！</title>
+	<link charset="utf-8" rel="stylesheet" href="http://assets.stable.alipay.net/enterpriseportal/enterpriseportal.global-1.4.css" media="all" />
+	<link charset="utf-8" rel="stylesheet" href="http://assets.stable.alipay.net/tradeeportlet/tradeeportlet.global-1.3-src.css" media="all" />
+	<link charset="utf-8" rel="stylesheet" href="http://assets.stable.alipay.net/al/alice.components.ui-box-1.1.css" media="all" />
+	<link charset="utf-8" rel="stylesheet" href="http://tradeeportlet.stable.alipay.net/css/selectmenu.css" media="all" />
+	<link charset="utf-8" rel="stylesheet" href="http://tradeeportlet.stable.alipay.net/css/common.css" media="all" />
+	<style type="text/css">
+		.page-content {
+			padding: 20px;
+		}
+		.summ-title {
+			padding: 0 0 30px 80px;
+		}
+		.memo-item {
+			height: 68px;
+		}
+		.mi-textarea {
+			width: 300px;
+			height: 30px;
+		}
+	</style>
+	<script charset="utf-8" type="text/javascript" src="../script/sea.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../script/common.js"></script>
+</head>
+
+<body>
+	
+	<div class="page-content">
+		<div class="summ-title">
+			<h1 class="ft-bold ft-14">我的简历</h1>
+		</div>
+		<form name="form" id="resumeForm" class="mi-form" method="post" action="/demo/" >
+			<div class="mi-form-item" id="username">
+				<label class="mi-label"><span class="required">*</span>姓名：</label>
+				<input type="text" name="batchId" value="" class="mi-input" />
+				<div class="mi-form-explain"></div>
+			</div>
+			<div class="mi-form-item" id="sex">
+				<label class="mi-label"><span class="required">*</span>性&#12288;别：</label>
+				<div class="mi-form-text">
+					<input type="radio" name="userSex" value="0" id="sex0" class="mi-radio" />
+					<label class="mi-radio-label" for="sex0">男</label>
+					<input type="radio" name="userSex" value="1" id="sex1" class="mi-radio" />
+					<label class="mi-radio-label" for="sex1">女</label>
+				</div>
+				<div class="mi-form-explain"></div>
+			</div>
+			<div class="mi-form-item" id="hobby">
+				<label class="mi-label">爱&#12288;好：</label>
+				<div class="mi-form-text">
+					<input type="checkbox" name="userHobby0" value="swiming" class="mi-checkbox" />
+					<label class="mi-radio-label" for="hobby0">游泳</label>
+					<input type="checkbox" name="userHobby1" value="climb" class="mi-checkbox" />
+					<label class="mi-radio-label" for="hobby1">爬山</label>
+				</div>
+				<div class="mi-form-explain"></div>
+			</div>
+			<div class="mi-form-item" id="type">
+				<label class="mi-label">
+					<span class="required">*</span>
+					类&#12288;别：
+				</label>
+				<div class="mi-form-text">
+					<select name="type">
+						<option value="" selected>请选择</option>
+						<option value="A">类别A</option>
+						<option value="B">类别B</option>
+						<option value="C">类别C</option>
+						<option value="D">类别D</option>
+					</select>
+				</div>
+				<div class="mi-form-explain"></div>
+			</div>
+	        <div class="mi-form-item memo-item" id="memo">
+	            <label class="mi-label">
+	                备&#12288;注：
+	            </label>
+	            <textarea class="mi-textarea" name="memo" data-maxlength="100"></textarea>
+	            <div class="mi-form-explain">50个汉字，100个字符。</div>
+	        </div>
+			<div class="mi-form-item">
+				<label class="mi-label">&nbsp;</label>
+				<span class="mi-button mi-button-morange">
+					<input type="submit" value="确 定" class="mi-button-text" />
+				</span>
+			</div>
+	
+		</form>
+	</div>
+	<script type="text/javascript">
+		seajs.use(['jQuery-1.7.2', 'cellula-0.4.1', 'searchingScene-0.1', 'select', 'selectSkin'], function($, Cellula, SearchingScene, Select, selectSkin) {
+			var util = Cellula._util, 
+				Class = Cellula.Class, 
+				Element = Cellula.Element, 
+				Cell = Cellula.Cell, 
+				Coll = Cellula.Collection;
+			
+			/** 用户名 **/
+			var UserName = new Class('UserName', {
+				//require: false,
+				type: 'input',
+				label : '姓名',
+				init : function(conf) {
+					this._super(conf);
+				},
+				rule: {
+					isString: function() {
+						if (!/[\u4e00-\u9fa5]+/.test(this.element.value)) {
+							this.errorMessage = this.label + '只能包含中文字符';
+							return false;
+						}
+						return true;
+					}
+				}
+			}).inherits(SearchingScene.FormItem);
+			/* 性别 */
+			var Sex = new Class('Sex', {
+				type:'radio', 
+				label: '性别',
+				init : function(conf) {
+					this._super(conf);
+					this._bindAll('click');
+					$(this.element).click(this.click);
+				},
+				click : function(e) {
+					this.triggerValidate();
+				}
+			}).inherits(SearchingScene.FormItem);
+			/* 爱好  */
+			var Hobby = new Class('Hobby', {
+				require: false,
+				type: 'checkbox', 
+				label: '爱好',
+				init : function(conf) {
+					this._super(conf);
+					this._bindAll('choose');
+					$(this.element).click(this.choose);
+				},
+                choose : function(e) {
+					this.triggerValidate();
+				}
+			}).inherits(SearchingScene.FormItem);
+			/* 类别  */
+			var Type = new Class('type', {
+				type: 'select', 
+				label: '类别',
+				init : function(conf) {
+					this._super(conf);
+					new Select({ width: 100, size: 3, zIndex: 2 }).apply(this.element);
+				}
+			}).inherits(SearchingScene.FormItem);
+            /* memo */
+            var Memo = new Class('Memo', {
+                require: false,
+                type: 'textarea',
+                label: '备注',
+                defaultTip: '',
+                maxLength: undefined,
+                init: function(conf) {
+                    this._super(conf);
+                    this.defaultTip = this.tip;
+                    this.maxLength = parseInt( this.element.getAttribute('data-maxlength'), 10 ) * 2;
+                    this._bindAll('limitWord');
+                    $(this.element).on('change keyup', this.limitWord);
+                },
+                limitWord: function(e) {
+                    if ($.trim(this.element.value) == '') this.tip = this.defaultTip;
+                    this.triggerValidate();
+                },
+                rule: {
+                    limitWord: function() {
+                       var val = this.element.value;
+                       var len = val.replace(/[\u4E00-\u9FBF]/g, 'BB').length;
+                       if (len > this.maxLength) {
+                           this.errorMessage = '输入已超过' + Math.floor((len - this.maxLength) / 2) + '个字。';
+                           return false;
+                       } else {
+                           this.tip = '还可以输入' + Math.ceil((this.maxLength - len) / 2) + '个字。';
+                           return true;
+                       }
+                    }
+                }
+            }).inherits(SearchingScene.FormItem);
+			/** collection **/
+            var formElements = {
+                username:  new UserName({ key : 'username' }),
+                sex: new Sex({key: 'sex'}),
+                hobby: new Hobby({key: 'hobby'}),
+                type: new Type({key: 'type'}),
+                memo: new Memo({key: 'memo'})
+            };
+			
+			var ResumeForm = new Class('ResumeForm', {
+				type: 'single',
+				itemList: null,
+				//submitBtn: '#J_submit',
+				init: function(conf) {
+					this._super(conf);
+					this.collection = new Coll({ type: SearchingScene.FormItem });
+					this.createItem();
+					//console.log( this.submitBtn[0] );
+				},
+				createItem: function() {
+					util.each(this.itemList, function(item) {
+						this.register('FORMITEM:VALIDATE', item);
+						//item.register('FORM:ISVALIDATE', this);
+						this.collection.push(item);
+					}, this);
+				}
+			}).inherits(SearchingScene.SearchingForm);
+			
+			var resumeForm = new ResumeForm({
+				key: 'resumeForm',
+				itemList: formElements
+			});
+			
+		});
+	</script>
+
+</body>
+
+</html>

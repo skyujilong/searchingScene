@@ -1,0 +1,138 @@
+.search .list-icon-collapsed, .search .list-icon-expanded {
+	background: url('https://i.alipayobjects.com/e/201309/18314JWoD9.png') no-repeat 3px 7px;
+	display: inline-block;
+	margin-left: -12px;
+	width: 16px;
+	height: 18px;
+	overflow: hidden;
+}
+
+.search .list-icon-expanded {
+	background-position: -22px 6px;
+}
+
+.accountSwitchPlacerTitle {
+	display: inline-block;
+	background: url("https://i.alipayobjects.com/e/201304/9Cz8WdFxX.png") no-repeat 0 -531px;
+	padding: 5px 12px;
+	height: 22px;
+	line-height: 22px;
+	color: #4d4d4d;
+	width: 68px;
+	float: left;
+	text-align: center;
+}
+
+.search-mini .accountSwitch.ui-selectmenu {
+	display: block;
+	float: left;
+	height: 30px;
+}
+
+.search-mini .ui-selectmenu-menu .ui-selectmenu-menu-dropdown {
+	height: 152px;
+}
+
+/**下拉 menu 样式**/
+.custom-menu {
+	background-color: #fff;
+	color: #0188CC;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+	margin-top: -4px;
+}
+
+.custom-menu li {
+	cursor: pointer;
+	line-height: 28px;
+	height: 28px;
+	padding: 0;
+	text-align: left;
+	position: relative;
+	overflow: hidden;
+	*margin-top: -3px;
+}
+
+.custom-menu li.first {
+	border-radius: 3px 3px 0 0;
+	line-height: 28px;
+	height: 28px;
+	*margin-top: 0;
+}
+
+.custom-menu li.last {
+	border-radius: 0 0 3px 3px;
+	line-height: 28px;
+	height: 28px;
+}
+
+.custom-menu li.split {
+	border-top: 1px solid #e9e9e9;
+	line-height: 28px;
+	height: 28px;
+}
+
+.custom-menu li:hover {
+	color: #fff;
+	background-color: #3669c9;
+}
+
+.custom-menu li a, .custom-menu li span {
+	display: block;
+	padding-right: 18px;
+	padding-left: 6px;
+}
+
+.custom-menu li:hover a, .custom-menu li a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.custom-menu li.disabled a:link, .custom-menu li.disabled a:visited, .custom-menu li.disabled a:hover {
+	color: #a1a1a1 !important;
+}
+
+.ui-poptip-black {
+	color: #fff !important;
+}
+
+.ui-poptip-black .ui-poptip-shadow {
+	background-color: rgba(255, 255, 255, 0.05) !important;
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#0cffffff, endColorstr=#0cffffff) !important;
+}
+
+.ui-poptip-black .ui-poptip-container {
+	background-color: #333 !important;
+	border: 1px solid #444 !important;
+}
+
+.ui-poptip-black .ui-poptip-arrow-10 em {
+	border-right-color: #444 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-11 em, .ui-poptip-black .ui-poptip-arrow-1 em {
+	border-bottom-color: #444 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-2 em, .ui-poptip-black .ui-poptip-arrow-4 em {
+	border-left-color: #444 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-5 em, .ui-poptip-black .ui-poptip-arrow-7 em {
+	border-top-color: #444 !important;
+}
+
+.ui-poptip-black .ui-poptip-arrow-10 span {
+	border-right-color: #333 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-11 span, .ui-poptip-black .ui-poptip-arrow-1 span {
+	border-bottom-color: #333 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-2 span, .ui-poptip-black .ui-poptip-arrow-4 span {
+	border-left-color: #333 !important;
+}
+.ui-poptip-black .ui-poptip-arrow-5 span, .ui-poptip-black .ui-poptip-arrow-7 span {
+	border-top-color: #333 !important;
+}

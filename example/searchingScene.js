@@ -133,6 +133,10 @@
 		}).inherits(SearchingScene.FormItem);
 		
 		var TableView = new Class('TableView', {
+			tips : {
+				noResult : 'error-box',
+				error : 'sys-error-box'
+			},
 			init : function(conf) {
 				this._super(conf);
 			},
@@ -167,16 +171,6 @@
 			},
 			registerEvents: function() {
 				
-			},
-			receiver: function(e) {
-				if (!e) return;
-				var targ = e.target, evt = e.name.split(':')[1];
-				switch (evt) {
-					case 'TABLERENDER':
-						this.render(arguments[1]);
-						//console.log(arguments[1]);
-						break;
-				}
 			}
 		}).inherits(SearchingScene.DataTable);
 		
@@ -246,7 +240,7 @@
 				var _self = this;
 				this.ajaxLoadingBox.show();
 				this.asyn = $.ajax({
-					url: '/searchingScene/example/data/reco.php',
+					url: '/gitlab/searchingScene/example/data/reco.php',
 					type: 'POST',
 					data: data,
 					timeout: 10000,
@@ -255,22 +249,15 @@
 						if (resp.status == 'succeed') {
 							_self.ajaxLoadingBox.hide();
 							_self.dataDispatch(resp);
-						} else {
-							console.log('searching failed!');
-						}
+						} else 
+							this.emit('FORM:SYSTEMERROR');
 					},
 					error: function(xhr, stat, error) {
 						_self.ajaxLoadingBox.hide();
-						_self.showSysErrorBox();
-						if (window.debug) {
-		                    console.log('error: ', xhr, stat, error);
-		                }
+						this.emit('FORM:SYSTEMERROR');
+						window.debug && console.log('error: ', xhr, stat, error);
 					}
 				});
-			},
-			showSysErrorBox: function() {
-				this.emit('FORM:SYSTEMERROR');
-				$('.sys-error-box').show();
 			}
 		}).inherits(SearchingScene.SearchingForm);
 		

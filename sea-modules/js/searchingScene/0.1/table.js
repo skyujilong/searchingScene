@@ -39,7 +39,13 @@ define(function(require, exports, module) {
 			this.initTip();
 			//this.registerEvents();
 		},
+		registerEvents: function() {
+		},
 		prepareTplConfig : function(data) {
+		},
+		show: function(bool) {
+			var call = bool ? util.removeClass : util.addClass;
+			call(this.rootNode, this.hideClass);
 		},
 		error : function() {
 			this.show(false);
@@ -47,22 +53,31 @@ define(function(require, exports, module) {
 		},
 		showNoResult : function() {
 			this.show(false);
-			this.applyInterface('error');
 			util.removeClass(this.tipNodes.noResult, this.hideClass);
+		},
+		receiver: function(e) {
+			if (!e) return;
+			var targ = e.target, evt = e.name.split(':')[1];
+			switch (evt) {
+				case 'TABLERENDER':
+					this.render(arguments[1]);
+					break;
+				case 'SYSTEMERROR':
+					this.show(false);
+					break;
+			}
 		},
 		render : function(data) {
 			var root = this.rootNode;
-			//util.addClass(this.tipNodes.error, this.hideClass);
-			//util.addClass(this.tipNodes.noResult, this.hideClass);
+			util.addClass(this.tipNodes.error, this.hideClass);
+			util.addClass(this.tipNodes.noResult, this.hideClass);
 			
 			if (data.length === 0) {
-				//this.show(false);
-				//this.applyInterface('error');
-				//util.removeClass(this.tipNodes.noResult, this.hideClass);
 				this.showNoResult();
+				this.emit('TABLEVIEW:NORESULT');
 				return false;
 			}
-			//data = data.dataTable;
+			
 			var table = root.getElementsByTagName('table')[0], 
 				thead = table.getElementsByTagName('thead')[0], 
 				tbody = table.getElementsByTagName('tbody')[0], 
@@ -81,10 +96,7 @@ define(function(require, exports, module) {
 			div.innerHTML = '<table><tbody>' + util.parseTpl(this.tableTpl.body, data) + '</tbody></table>';
 			tbody = div.getElementsByTagName('tbody')[0];
 			table.appendChild(tbody);
-			
-			util.removeClass(root, this.hideClass);
-			//this.show(true);
-
+			this.show(true);
 			this.registerEvents();
 			//this.applyInterface('render', data);
 		}

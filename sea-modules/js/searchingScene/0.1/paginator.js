@@ -136,7 +136,10 @@ define(function(require, exports, module) {
 					this.getCollection();
 					break;
 				case 'SYSTEMERROR':
-					console.log('paginator sys error');
+					util.addClass(this.rootNode, this.hideClass);
+					break;
+				case 'NORESULT':
+					util.addClass(this.rootNode, this.hideClass);
 					break;
 			}
 		},

@@ -26,12 +26,12 @@ define(function(require, exports, module) {
 		type: undefined,
 		validateAll : false,
 		submitBtn: null,
-		autoSubmit: true,
+		//autoSubmit: true,
 		collection: null,
 		itemList: undefined,
 		tableView: undefined,
 		paging : undefined,
-		ajaxLoadingBox: undefined,
+		//ajaxLoadingBox: undefined,
 		init : function(cfg) {
 			if (!this.key) this.key = this.__cid__;
 			this._super(cfg);
@@ -42,6 +42,7 @@ define(function(require, exports, module) {
 			if (this.paging) {
 				this.follow(this.paging);
 				this.paging.follow(this);
+				this.tableView && this.paging.follow(this.tableView);
 				this.tableView && this.tableView.follow(this.paging);
 				this.tableView && this.tableView.follow(this);
 			}
@@ -97,12 +98,9 @@ define(function(require, exports, module) {
 					this.pageCollection = arguments[1];
 					break;
 				case 'DOSEARCH':
-					//console.log( arguments[1] );
 					this.doSearch(arguments[1]);
 					break;
-				case 'SYSTEMERROR':
-					console.log('table sys error');
-					break;
+				
 			}
 		},
 		doSearch : function(e) {
@@ -163,10 +161,10 @@ define(function(require, exports, module) {
 			}
 			// TODO:
 			// no result
-			if (data.result.length == 0) {
-				console.log('no result.');
-				return;
-			}
+			//if (data.result.length == 0) {
+			//	console.log('no result.');
+			//	return;
+			//}
 			// to table
 			this.emit('TABLE:TABLERENDER', data.result.detail);
 			// to paginator

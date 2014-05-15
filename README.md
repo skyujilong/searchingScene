@@ -10,6 +10,7 @@ tips:
 ----------
 
 **FormItem**
+
 每一个表单控件可以是一个formItem，以下构建一个formItem
 
     var UserName = new Class('UserName', {
@@ -81,7 +82,41 @@ tips:
 
 @rule Objict ：对象中的每个Func将是一个校验规则，返回`true`|`false`表示校验通过与否
 
-@triggerValidate Function ：手动触发校验
+@triggerValidate Function ：手动触发校验，内部在触发`focus` `blur`会自动调用，但如果绑定其它事件通常是需要手动调用的，例如：
+
+	var Memo = new Class('Memo', {
+                require: false,
+                type: 'textarea',
+                label: '备注',
+                defaultTip: '',
+                maxLength: undefined,
+                init: function(conf) {
+                    this._super(conf);
+                    this.defaultTip = this.tip;
+                    this.maxLength = parseInt( this.element.getAttribute('data-maxlength'), 10 ) * 2;
+                    this._bindAll('limitWord');
+                    $(this.element).on('change keyup', this.limitWord);
+                },
+                limitWord: function(e) {
+                    if ($.trim(this.element.value) == '') this.tip = this.defaultTip;
+                    this.triggerValidate(); // 手动触发校验
+                },
+                rule: {
+                    limitWord: function() {
+                       var val = this.element.value;
+                       var len = val.replace(/[\u4E00-\u9FBF]/g, 'BB').length;
+                       if (len > this.maxLength) {
+                           this.errorMessage = '输入已超过' + Math.floor((len - this.maxLength) / 2) + '个字。';
+                           return false;
+                       } else {
+                           this.tip = '还可以输入' + Math.ceil((this.maxLength - len) / 2) + '个字。';
+                           return true;
+                       }
+                    }
+                }
+            }).inherits(SearchingScene.FormItem);
+			
+
 
 ----------
 
@@ -92,6 +127,7 @@ tips:
 
 
 **Form**
+
 以下构建一个Form
 
     var ResumeForm = new Class('ResumeForm', {
@@ -156,7 +192,8 @@ tips:
 
 
 ## Single Form 应用场景 ##
-
+is Building...
 
 
 ## Searching Form 应用场景 ##
+is Building...
